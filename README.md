@@ -1,3 +1,3 @@
-This is a online markdown editor & previewer
+This is an online markdown editor & previewer
 
 have fun :)
