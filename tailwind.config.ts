@@ -6,7 +6,17 @@ const config: Config = {
     './components/**/*.{js,ts,jsx,tsx,mdx}',
     './app/**/*.{js,ts,jsx,tsx,mdx}'
   ],
-  theme: {},
+  theme: {
+    extend: {
+      spacing: {
+        header: '50px',
+        hm: '70px' /* header margin */
+      },
+      boxShadow: {
+        my: '0 0px 5px 2px'
+      }
+    }
+  },
   plugins: []
 }
 export default config

@@ -1,3 +1,115 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --code-border-radius: 5px;
+}
+
+#editor,
+#preview {
+  height: 83vh;
+}
+
+#preview h1,
+#preview h2,
+#preview h3,
+#preview h4,
+#preview h5,
+#preview h6 {
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+#preview h1,
+#preview h2 {
+  border-bottom: 1.5px solid #444;
+}
+
+#preview h1 {
+  font-size: 1.4rem;
+}
+
+#preview h2 {
+  font-size: 1.2rem;
+}
+
+#preview pre,
+#preview p {
+  margin: 1.2rem 0;
+}
+
+#preview pre {
+  border-radius: var(--code-border-radius);
+  background-color: lightgray;
+}
+
+#preview code {
+  padding: 0 5px;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+#preview>pre>code {
+  white-space: normal;
+  border-radius: var(--code-border-radius);
+}
+
+#preview>p>code {
+  border: 1px solid lightgray;
+  border-radius: var(--code-border-radius);
+}
+
+#preview blockquote {
+  padding-left: 10px;
+  color: #444;
+  border-left: 3px solid #444;
+}
+
+#preview table,
+#preview ul,
+#preview ol,
+#preview blockquote {
+  margin: 1.5rem 0;
+}
+
+#preview ol {
+  list-style-type: number;
+}
+
+#preview ul,
+#preview ol,
+#preview blockquote {
+  margin-left: 2rem;
+}
+
+#preview th,
+#preview td {
+  text-align: left;
+  padding: 5px;
+  border: 1.5px solid black;
+}
+
+#preview ul {
+  margin-left: 1.5rem;
+}
+
+#preview ul li {
+  list-style-type: square;
+}
+
+#preview>ul>li {
+  list-style: disc;
+}
+
+#preview>ul>li>ul>li {
+  list-style-type: circle;
+}
+
+#preview a {
+  text-decoration: underline;
+  color: darkorchid;
+}
+
+button {
+  background-color: #0284c7;
+}
