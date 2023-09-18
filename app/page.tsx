@@ -5,23 +5,25 @@ import EditorButton from '@/components/editorButton'
 import Preview from '@/components/preview'
 import PreviewButton from '@/components/previewButton'
 import { marked } from 'marked'
-import React, { type FormEvent, useState } from 'react'
+import React, { type FormEvent, useState, useEffect } from 'react'
 
 export default function Home (): React.JSX.Element {
   const [showEditor, setShowEditor] = useState(true)
   const [showPreivew, setShowPreview] = useState(true)
-  const [screen, setScreen] = useState(window.innerWidth)
+  const [screen, setScreen] = useState(0)
   const [mainWidth, setMainWidth] = useState(doubleWidth)
   const [markdown, setMarkdown] = useState(initText)
 
-  // set the screen width when resizing window to handle responsive design
-  window.addEventListener('resize', () => {
-    setScreen(window.innerWidth)
-    if (screen < 768) {
-      setMainWidth(singleWidth)
-    }
-    doubleWidth = singleWidth
-  })
+  useEffect(() => {
+    // set the screen width when resizing window to handle responsive design
+    window.addEventListener('resize', () => {
+      setScreen(window.innerWidth)
+      if (screen < 768) {
+        setMainWidth(singleWidth)
+      }
+      doubleWidth = singleWidth
+    })
+  }, [])
 
   /**
    * Handle the user click on show button. When user click either the `editor`
