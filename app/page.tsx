@@ -10,23 +10,40 @@ import React, { type FormEvent, useState } from 'react'
 export default function Home (): React.JSX.Element {
   const [showEditor, setShowEditor] = useState(true)
   const [showPreivew, setShowPreview] = useState(true)
+  const [screen, setScreen] = useState(window.innerWidth)
+  const [mainWidth, setMainWidth] = useState(doubleWidth)
   const [markdown, setMarkdown] = useState(initText)
 
+  // set the screen width when resizing window to handle responsive design
+  window.addEventListener('resize', () => {
+    setScreen(window.innerWidth)
+    if (screen < 768) {
+      setMainWidth(singleWidth)
+    }
+    doubleWidth = singleWidth
+  })
+
   /**
-   * An general function to handle the click on 'show editor button' and 'show
-   * previewer button'
-   * @param event An event represents mouse click
-   * @param setter the setter which returned by useState()
-   * @param isShow the state represent if show the editor or the previewer
+   * Handle the user click on show button. When user click either the `editor`
+   * or the `preview` button, this function will ensure the corresponding part
+   * will show or disappear, and gives the clicked button correct color.
+   * @param event the event which triggered by user
    */
-  function handleClick (
-    event: FormEvent<HTMLButtonElement>,
-    setter: React.Dispatch<React.SetStateAction<boolean>>,
-    isShow: boolean
-  ): void {
-    setter(!isShow)
+  function handleClick (event: FormEvent<HTMLButtonElement>): void {
     const target = event.target as HTMLButtonElement
+    const which = target.id === 'editor-button'
+    const [isShow, setter] = which
+      ? [showEditor, setShowEditor]
+      : [showPreivew, setShowPreview]
+    setter(!isShow)
     target.style.backgroundColor = isShow ? '#9ca3af' : '#0284c7'
+    let width
+    if (which) {
+      width = !showEditor && showPreivew ? doubleWidth : singleWidth
+    } else {
+      width = showEditor && !showPreivew ? doubleWidth : singleWidth
+    }
+    setMainWidth(width)
   }
 
   return (
@@ -39,20 +56,21 @@ export default function Home (): React.JSX.Element {
         <div id='main' className='w-40 flex justify-evenly'>
           <EditorButton isShow = {showEditor}
           onClick={(e: FormEvent<HTMLButtonElement>) => {
-            handleClick(e, setShowEditor, showEditor)
+            handleClick(e)
           }} />
           <PreviewButton isShow = {showPreivew}
           onClick={(e: FormEvent<HTMLButtonElement>) => {
-            handleClick(e, setShowPreview, showPreivew)
+            handleClick(e)
           }} />
         </div>
       </div>
-      <div className='mt-hm h-auto flex flex-row justify-evenly'>
+      <div className='mt-hm h-auto flex flex-col items-center md:flex-row
+      justify-evenly'>
         {
           showEditor
             ? (
               <Editor isShow = {showEditor} content={markdown}
-              width={showPreivew ? '400px' : '700px'}
+              width={mainWidth}
               onInput={(e: FormEvent<HTMLTextAreaElement>) => {
                 setMarkdown((e.target as HTMLInputElement).value)
               }} />
@@ -63,7 +81,7 @@ export default function Home (): React.JSX.Element {
           showPreivew
             ? (
               <Preview isShow = {showPreivew} content={marked.parse(markdown)}
-              width={showEditor ? '400px' : '700px'} />
+              width={mainWidth} />
               )
             : (null)
         }
@@ -71,6 +89,9 @@ export default function Home (): React.JSX.Element {
     </main>
   )
 }
+
+const singleWidth = '96.2%'
+let doubleWidth = '47%'
 
 const initText = `# Welcome to my React Markdown Previewer!
 

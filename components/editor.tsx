@@ -22,7 +22,7 @@ export default function Editor (
     </label>
     <textarea id='editor' value={props.content} onInput={props.onInput}
     className={
-      'h-fit p-2 shadow-my shadow-slate-300 resize-none outline-none' +
+      'm-1 h-fit p-2 shadow-my shadow-slate-300 resize-none outline-none' +
       ' ' + sourceCodePro.className
     }
     style={{ width: props.width }} />
